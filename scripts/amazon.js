@@ -137,7 +137,17 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
 
         }
 
+        //updating cart number
+        let cartQuantity = 0;
+
+        cart.forEach((item) => {
+            cartQuantity += item.quantity;
+
+        });
+
+        //updating HTML element using DOM
+        document.querySelector('.cart-quantity').innerHTML = cartQuantity;
       
-        console.log(cart);
+        console.log(cartQuantity);
     });
 });
