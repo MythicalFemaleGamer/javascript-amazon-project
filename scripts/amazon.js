@@ -1,4 +1,4 @@
-console.log("Amazon script loaded");
+console.log("Main idea of Javascript: Save the data, generate html, make it interactive");
 
 //saving the data in a data structure (array of objects) to make it easier to manipulate and display on the page
 // const products = [{
@@ -89,7 +89,8 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">Add to Cart</button>
+          <button class="add-to-cart-button button-primary"
+          data-product-id="${product.id}">Add to Cart</button>
         </div>
     `;
     
@@ -100,3 +101,43 @@ products.forEach((product) => {
 
 document.querySelector('.products-grid').innerHTML = productsHTML;
 //changing the html inside products-grid to new html
+
+//interactivity: adding event listeners to buttons to show "Added to Cart" message when clicked
+
+document.querySelectorAll('.add-to-cart-button').forEach((button) => { 
+    button.addEventListener('click', () => {
+        
+        //adding objects to cart
+        //first added data attribute to add-to-cart button so cart knows what thing to add to cart: 'data-any-name = "${value}"
+
+        //get product name
+        const productId = button.dataset.productId; //grabs the value of data-product-Id attribute and saves it in productId variable
+
+        // console.log(button.dataset); //grabs all data attributes attached to button
+        // console.log(button.dataset.productName); //just grabs product name
+
+         //grabbing product name can cause problems as multiple things can have same name, use a unique ID instead
+
+        let matchingItem;
+
+        //checking if product is already in cart and updating quantity       
+        cart.forEach((item) => {
+            if(productId === item.productId){
+                matchingItem = item;
+            } //setting values
+        });
+        if (matchingItem){
+            matchingItem.quantity +=1;
+        } //increasing quantity
+        else{  //adding product to cart array
+        cart.push({
+            productId: productId,
+            quantity: 1,
+        });
+
+        }
+
+      
+        console.log(cart);
+    });
+});
