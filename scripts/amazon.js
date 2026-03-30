@@ -1,31 +1,41 @@
 console.log("Amazon script loaded");
 
 //saving the data in a data structure (array of objects) to make it easier to manipulate and display on the page
-const products = [{
-    image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
-    name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
-    rating:{
-        stars: 4.5,
-        count: 87
-    },
-    priceCents: 1090 //saved as cents to avoid floating point issues
-}, {
-    image: 'images/products/intermediate-composite-basketball.jpg',
-    name: 'Intermediate Size Basketball',
-    rating:{
-        stars:4,
-        count: 127
-    },
-    priceCents: 2095
-},{
-    image:'images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg',
-    name: 'Adults Plain Cotton T-Shirt - 2 Pack',
-    rating:{
-        stars: 4.5,
-        count: 56
-    },
-    priceCents:799
-}];
+// const products = [{
+//     image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
+//     name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
+//     rating:{
+//         stars: 4.5,
+//         count: 87
+//     },
+//     priceCents: 1090 //saved as cents to avoid floating point issues
+// }, {
+//     image: 'images/products/intermediate-composite-basketball.jpg',
+//     name: 'Intermediate Size Basketball',
+//     rating:{
+//         stars:4,
+//         count: 127
+//     },
+//     priceCents: 2095
+// },{
+//     image:'images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg',
+//     name: 'Adults Plain Cotton T-Shirt - 2 Pack',
+//     rating:{
+//         stars: 4.5,
+//         count: 56
+//     },
+//     priceCents:799
+// },{
+//     image: 'images/products/black-2-slot-toaster.jpg',
+//     name: '2 Slot Toaster - Black',
+//     rating:{
+//         stars: 5,
+//         count: 2197
+//     },
+//     priceCents: 1899
+// },
+
+// ];
 
 //generating HTML from data and inserting it into the page
 let productsHTML = '';
@@ -84,7 +94,7 @@ products.forEach((product) => {
     `;
     
 });
-console.log(productsHTML);
+// console.log(productsHTML);
 
 //using DOM manipulation to insert the generated HTML into the page
 
