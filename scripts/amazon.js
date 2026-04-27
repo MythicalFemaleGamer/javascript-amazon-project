@@ -1,4 +1,7 @@
-console.log("Main idea of Javascript: Save the data, generate html, make it interactive");
+import {cart, addToCart} from '../data/cart.js';
+import {products} from '../data/products.js'
+import { formatCurrency } from './utils/money.js';
+
 
 //saving the data in a data structure (array of objects) to make it easier to manipulate and display on the page
 // const products = [{
@@ -40,7 +43,6 @@ console.log("Main idea of Javascript: Save the data, generate html, make it inte
 //generating HTML from data and inserting it into the page
 let productsHTML = '';
 
-
 //generating HTML from data
 
 products.forEach((product) => {
@@ -65,10 +67,10 @@ products.forEach((product) => {
             <div class="product-rating-count link-primary">${product.rating.count}</div>
           </div>
 
-          <div class="product-price">$${(product.priceCents / 100).toFixed(2)}</div>
+          <div class="product-price">$${formatCurrency(product.priceCents)}</div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -84,7 +86,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png" />
             Added
           </div>
@@ -92,7 +94,7 @@ products.forEach((product) => {
           <button class="add-to-cart-button button-primary"
           data-product-id="${product.id}">Add to Cart</button>
         </div>
-    `;
+    `; 
     
 });
 // console.log(productsHTML);
@@ -103,6 +105,34 @@ document.querySelector('.products-grid').innerHTML = productsHTML;
 //changing the html inside products-grid to new html
 
 //interactivity: adding event listeners to buttons to show "Added to Cart" message when clicked
+
+function updateCartQuantity(productId){
+
+  let cartQuantity = 0;
+
+        cart.forEach((cartItem) => {
+            cartQuantity += cartItem.quantity;
+
+        });
+
+        //updating HTML element using DOM
+        document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+
+         if (productId) {
+    const addedMessage = document.querySelector(`.added-to-cart-${productId}`);
+
+    if (addedMessage) {
+      addedMessage.classList.add('added-to-cart-visible');
+
+      setTimeout(() => {
+        addedMessage.classList.remove('added-to-cart-visible');
+      }, 2000);
+    }
+  }
+     
+}
+
+updateCartQuantity();
 
 document.querySelectorAll('.add-to-cart-button').forEach((button) => { 
     button.addEventListener('click', () => {
@@ -118,36 +148,13 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
 
          //grabbing product name can cause problems as multiple things can have same name, use a unique ID instead
 
-        let matchingItem;
-
-        //checking if product is already in cart and updating quantity       
-        cart.forEach((item) => {
-            if(productId === item.productId){
-                matchingItem = item;
-            } //setting values
-        });
-        if (matchingItem){
-            matchingItem.quantity +=1;
-        } //increasing quantity
-        else{  //adding product to cart array
-        cart.push({
-            productId: productId,
-            quantity: 1,
-        });
-
-        }
+        addToCart(productId);
 
         //updating cart number
-        let cartQuantity = 0;
-
-        cart.forEach((item) => {
-            cartQuantity += item.quantity;
-
-        });
-
-        //updating HTML element using DOM
-        document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+      updateCartQuantity(productId); 
+         
       
-        console.log(cartQuantity);
+        
     });
 });
+
